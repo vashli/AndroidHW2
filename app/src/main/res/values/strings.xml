@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="activity_main_app_name">weather</string>
+    <string name="activity_main_city_template">Rome</string>
+    <string name="activity_main_date_template">Monday 17 gen 18 6:32 am</string>
+    <string name="activity_main_temperature_template">13</string>
+    <string name="activity_main_temperature_dim">°C</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="day_and_night">Day and Night</string>
+    <string name="activity_main_precipitation_value">5%</string>
+    <string name="activity_main_humidity_value">30%</string>
+    <string name="activity_main_wind_value">9kmh</string>
+    <string name="activity_main_day_value">5:30 am 6:30 pm</string>
+    <string name="fragment_main_pereived">Perceived</string>
+    <string name="fragment_main_pereived_value_template">12 °C</string>
+
+
+</resources>
