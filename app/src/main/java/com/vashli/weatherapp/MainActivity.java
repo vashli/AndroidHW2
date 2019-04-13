@@ -1,18 +1,12 @@
 package com.vashli.weatherapp;
 
 import android.net.ConnectivityManager;
-import android.os.Debug;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ViewParent;
 import android.widget.Toast;
-
 import com.vashli.weatherapp.Model.Country;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         if(isNetworkConnected()){
             getCountries();
         }else{
-            Log.d("mari", "no internet");
             Toast.makeText(this, "no internet", Toast.LENGTH_SHORT).show();
         }
     }
@@ -53,20 +46,20 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     mainViewPagerAdapter.setData(response.body());
                 }else{
-                    Log.e("mari", "error occurred" );
+                    Toast.makeText(getBaseContext(), "couldn't fetch the data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Country>> call, Throwable t) {
-                Log.e("mari", t.getMessage() );
+                Toast.makeText(getBaseContext(), "couldn't fetch the data", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+    public boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null  && cm.getActiveNetworkInfo().isConnected();
     }
 

@@ -1,25 +1,27 @@
 package com.vashli.weatherapp;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.vashli.weatherapp.Model.Data;
-
 import java.util.Calendar;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MainFragment extends Fragment {
     private Retrofit retrofit;
@@ -51,7 +53,11 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initViewComponents(view);
         countryName = this.getArguments().getString("name", "noName");
-        getData();
+        if(isNetworkConnected()){
+            getData();
+        }else{
+            Toast.makeText(getContext(), "no internet", Toast.LENGTH_SHORT).show();
+        }
         return view;
     }
 
@@ -110,13 +116,13 @@ public class MainFragment extends Fragment {
                 if(response.isSuccessful()){
                     setValues(response.body());
                 }else{
-                    Log.d("mari","error occurred");
+                    Toast.makeText(getContext(), "couldn't fetch the data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
-                Log.d("mari","onFailure");
+                Toast.makeText(getContext(), "couldn't fetch the data", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -138,5 +144,9 @@ public class MainFragment extends Fragment {
             iconHumidity.setImageResource(R.drawable.ic_humidity);
             iconFlag.setImageResource(R.drawable.ic_flag);
         }
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null  && cm.getActiveNetworkInfo().isConnected();
     }
 }
